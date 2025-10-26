@@ -62,7 +62,7 @@ body {
 .check-icon {
     color: var(--color-gold);
     font-size: 1.5rem;
-    margin-left: 10px;
+    margin-left: 10px; /* في العربية، margin-left يعطي مسافة على اليمين بسبب dir=rtl */
 }
 
 /* 4. How it Works Section */
@@ -104,14 +104,23 @@ body {
 
 /* 6. Form Section Styling */
 .form-section {
-    background-color: #1a1a1a; /* أسود أفتح قليلاً */
+    background-color: #1a1a1a; 
 }
 .form-container {
     background-color: #2b2b2b;
     border-radius: 15px;
     border: 2px solid var(--color-gold);
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+    /* تعديل الهوامش هنا: p-4 على الصغير, p-lg-5 على الكبير */
+    padding: 1.5rem; 
 }
+
+@media (min-width: 992px) {
+    .form-container {
+        padding: 3rem; /* استعادة الهامش الكبير للديسكتوب */
+    }
+}
+
 .form-container .form-label {
     color: var(--color-light);
 }
@@ -168,4 +177,12 @@ body {
 /* 8. Footer Styling */
 footer {
     background-color: var(--color-dark);
+}
+
+/* 9. Mobile Specific Tweaks (جديد) */
+/* تحسين العنوان الرئيسي للشاشات الضيقة جداً */
+@media (max-width: 360px) {
+    .main-headline {
+        font-size: 2rem; /* تصغير الخط قليلاً لمنع الالتفاف السيء */
+    }
 }
