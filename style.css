@@ -54,7 +54,6 @@ p {
     background-color: var(--color-light);
 }
 
-/* (جديد) ستايل صورة اهتزاز الثقة */
 .emotional-image {
     max-width: 700px;
     width: 100%;
@@ -75,7 +74,29 @@ p {
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-/* 3. Solution Section Styling */
+/* (جديد) 3. Doctor Endorsement Section */
+.doctor-endorsement-section {
+    background-color: #ffffff; /* خلفية بيضاء نظيفة */
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.doctor-image {
+    max-width: 300px; /* حجم مناسب لصورة الطبيب */
+    border: 5px solid var(--color-gold);
+    transition: transform 0.3s ease;
+}
+
+.doctor-image:hover {
+    transform: scale(1.05); /* تكبير بسيط عند التمرير */
+}
+
+.doctor-quote {
+    border-right: 5px solid var(--color-gold); /* خط ذهبي على اليمين */
+    padding-right: 1.5rem;
+}
+
+/* 4. Solution Section Styling (كان رقم 3) */
 .solution-section {
     background-color: #fdfdfd;
 }
@@ -93,7 +114,7 @@ p {
     margin-left: 10px;
 }
 
-/* 4. How it Works Section */
+/* 5. How it Works Section (كان رقم 4) */
 .how-it-works {
     background-color: var(--color-gray);
 }
@@ -111,9 +132,8 @@ p {
     box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
 
-/* (جديد) تحجيم أيقونات الخطوات */
 .step-icon {
-    max-width: 100px; /* تحديد حجم أقصى للأيقونات */
+    max-width: 100px; 
     height: auto;
     margin-bottom: 1rem !important;
 }
@@ -137,9 +157,9 @@ p {
     border: 3px solid var(--color-light);
 }
 
-/* 5. Testimonials Section Styling */
+/* 6. Testimonials Section Styling (كان رقم 5) */
 .testimonials-section {
-    background-color: #fdfdfd;
+    background-color: #f8f9fa; /* لون رمادي فاتح للتباين */
 }
 .testimonial-card {
     background: var(--color-light);
@@ -168,7 +188,7 @@ p {
 }
 
 
-/* 6. Guarantee Section Styling */
+/* 7. Guarantee Section Styling (كان رقم 6) */
 .guarantee-section {
     background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('./Images/dark-texture-bg.jpg'); /* تأكد من وضع صورة هنا */
     background-attachment: fixed;
@@ -179,7 +199,7 @@ p {
     border-bottom: 8px solid var(--color-gold);
 }
 
-/* 7. Form Section Styling */
+/* 8. Form Section Styling (كان رقم 7) */
 .form-section {
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./Images/form-bg.jpg'); /* تأكد من وضع صورة هنا */
     background-size: cover;
@@ -226,7 +246,7 @@ p {
     box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
 }
 
-/* 8. CTA Button Styling */
+/* 9. CTA Button Styling (كان رقم 8) */
 .cta-button {
     background-color: var(--color-gold);
     border-color: var(--color-gold);
@@ -261,19 +281,19 @@ p {
     animation: pulse 2s infinite;
 }
 
-/* 9. Footer Styling */
+/* 10. Footer Styling (كان رقم 9) */
 footer {
     background-color: var(--color-dark);
 }
 
-/* 10. Mobile Specific Tweaks */
+/* 11. Mobile Specific Tweaks (كان رقم 10) */
 @media (max-width: 360px) {
     .main-headline {
         font-size: 2rem; 
     }
 }
 
-/* 11. Sticky CTA Bar Styling */
+/* 12. Sticky CTA Bar Styling (كان رقم 11) */
 .sticky-cta-bar {
     position: fixed;
     bottom: 0;
