@@ -12,7 +12,15 @@ body {
     background-color: var(--color-gray);
     color: var(--color-text);
     overflow-x: hidden; /* منع التمرير الأفقي */
+    padding-bottom: 80px; 
 }
+
+@media (min-width: 992px) {
+    body {
+        padding-bottom: 0;
+    }
+}
+
 
 /* 1. Hero Section Styling */
 .hero-section {
@@ -40,8 +48,9 @@ body {
     border-bottom: 3px solid #dc3545; /* لون أحمر للخطر */
     border-radius: 8px;
     height: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* (جديد) إضافة transition */
 }
+/* (جديد) إضافة تأثير hover */
 .problem-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
@@ -62,7 +71,7 @@ body {
 .check-icon {
     color: var(--color-gold);
     font-size: 1.5rem;
-    margin-left: 10px; /* في العربية، margin-left يعطي مسافة على اليمين بسبب dir=rtl */
+    margin-left: 10px;
 }
 
 /* 4. How it Works Section */
@@ -76,7 +85,14 @@ body {
     position: relative;
     padding-top: 3rem !important;
     height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* (جديد) إضافة transition */
 }
+/* (جديد) إضافة تأثير hover */
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
 .step-number {
     position: absolute;
     top: -25px;
@@ -95,14 +111,46 @@ body {
     border: 3px solid var(--color-light);
 }
 
-/* 5. Guarantee Section Styling */
+/* 5. Testimonials Section Styling */
+.testimonials-section {
+    background-color: #fdfdfd;
+}
+.testimonial-card {
+    background: var(--color-light);
+    border-radius: 10px;
+    border: 1px solid #eee;
+    border-top: 4px solid var(--color-gold);
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* (جديد) إضافة transition */
+}
+/* (جديد) إضافة تأثير hover */
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+.testimonial-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 1rem;
+}
+.testimonial-author {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+
+/* 6. Guarantee Section Styling */
 .guarantee-section {
     background-color: var(--color-dark);
     border-top: 8px solid var(--color-gold);
     border-bottom: 8px solid var(--color-gold);
 }
 
-/* 6. Form Section Styling */
+/* 7. Form Section Styling */
 .form-section {
     background-color: #1a1a1a; 
 }
@@ -111,13 +159,12 @@ body {
     border-radius: 15px;
     border: 2px solid var(--color-gold);
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
-    /* تعديل الهوامش هنا: p-4 على الصغير, p-lg-5 على الكبير */
     padding: 1.5rem; 
 }
 
 @media (min-width: 992px) {
     .form-container {
-        padding: 3rem; /* استعادة الهامش الكبير للديسكتوب */
+        padding: 3rem; 
     }
 }
 
@@ -139,7 +186,7 @@ body {
     box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
 }
 
-/* 7. CTA Button Styling */
+/* 8. CTA Button Styling */
 .cta-button {
     background-color: var(--color-gold);
     border-color: var(--color-gold);
@@ -174,15 +221,33 @@ body {
     animation: pulse 2s infinite;
 }
 
-/* 8. Footer Styling */
+/* 9. Footer Styling */
 footer {
     background-color: var(--color-dark);
 }
 
-/* 9. Mobile Specific Tweaks (جديد) */
-/* تحسين العنوان الرئيسي للشاشات الضيقة جداً */
+/* 10. Mobile Specific Tweaks */
 @media (max-width: 360px) {
     .main-headline {
-        font-size: 2rem; /* تصغير الخط قليلاً لمنع الالتفاف السيء */
+        font-size: 2rem; 
     }
+}
+
+/* 11. Sticky CTA Bar Styling */
+.sticky-cta-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 0.75rem;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-top: 2px solid var(--color-gold);
+}
+
+.sticky-cta-bar .cta-button {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 0.5rem;
 }
