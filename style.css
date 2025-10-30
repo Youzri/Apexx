@@ -558,7 +558,7 @@ footer {
 /* New Image Section */
 .new-image-section {
     background-color: #FFFFFF; /* Assuming white background for new section */
-    padding: 20px 15px;
+    padding: 0px 15px;
     padding-bottom: 0px;
 }
 
@@ -574,8 +574,8 @@ footer {
     background-color: #2b2b2b; /* Dark grey background */
     border: 2px solid #FFD700; /* Golden-yellow border */
     border-radius: 10px;
-    padding: 10px 15px;
-    margin: 10px auto; /* Center the box and add vertical margin */
+    padding: 0px 15px;
+    margin: 0px auto; /* Center the box and add vertical margin */
     max-width: 600px; /* Limit width for better readability */
     color: #FFFFFF; /* Default text color for this section */
 }
@@ -584,14 +584,14 @@ footer {
     font-weight: 900;
     font-size: 1.5rem;
     color: #FFD700; /* Golden-yellow */
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 .form-explanation {
     font-weight: 700;
     font-size: .8rem;
     color: #FFFFFF;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     line-height: 1.6;
 }
 
@@ -609,7 +609,7 @@ footer {
     border-radius: 8px;
     padding: 10px 15px;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     text-align: right;
 }
 
