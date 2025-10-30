@@ -1,7 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   // --- 1. Lead Source Capture ---
   const urlParams = new URLSearchParams(window.location.search);
-  const leadSource = urlParams.get("source") || "organic"; // Default to "organic"
+
+  // *** FIX #1: Check for uppercase 'Source' OR lowercase 'source' ***
+  const leadSource =
+    urlParams.get("Source") || urlParams.get("source") || "organic";
+
+  // *** FIX #2: Use the correct ID 'sourceFieldNew' ***
   const sourceInput = document.getElementById("sourceFieldNew");
   if (sourceInput) {
     sourceInput.value = leadSource;
@@ -47,9 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
       submitBtnElement.textContent = "جاري الإرسال...";
       messageElement.textContent = "";
 
+      // *** FIX #1 and #2 applied here as a backup ***
       if (sourceInputElement) {
         const urlParams = new URLSearchParams(window.location.search);
-        const leadSource = urlParams.get("source") || "organic";
+        const leadSource =
+          urlParams.get("Source") || urlParams.get("source") || "organic";
         sourceInputElement.value = leadSource;
       }
 
@@ -60,10 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((data) => {
           if (data.result === "success") {
             // --- FASTER REDIRECT ---
-            // The success message and timeout are removed.
-            // We redirect immediately to the thank-you page.
             window.location.href = "thank-you.html";
-            // --- End New Feature ---
           } else {
             throw new Error(data.message || "An unknown error occurred.");
           }
@@ -71,14 +75,11 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch((error) => {
           console.error("Error!", error.message);
           messageElement.textContent =
-            "حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.";
+            "حدث خطأ أثناء إrsal الطلب. يرجى المحاولة مرة أخرى.";
           messageElement.style.color = "red";
-          // Re-enable button on error
           submitBtnElement.disabled = false;
           submitBtnElement.textContent = "اطلب الان";
         });
-      // Note: .finally() was removed because we only want to re-enable
-      // the button IF an error occurs. On success, we redirect.
     });
   }
 
