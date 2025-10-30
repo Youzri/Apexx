@@ -1,115 +1,107 @@
 document.addEventListener("DOMContentLoaded", function () {
-    
-    // --- 1. Lead Source Capture ---
-    const urlParams = new URLSearchParams(window.location.search);
-    const leadSource = urlParams.get("source") || "organic"; // Default to "organic"
-    
-    const sourceInput = document.getElementById("sourceField");
-    if (sourceInput) {
-        sourceInput.value = leadSource;
-    }
+  // --- 1. Lead Source Capture ---
+  const urlParams = new URLSearchParams(window.location.search);
+  const leadSource = urlParams.get("source") || "organic"; // Default to "organic"
+  const sourceInput = document.getElementById("sourceField");
+  if (sourceInput) {
+    sourceInput.value = leadSource;
+  } // --- NEW: Client-side phone normalization ---
 
-    // --- 2. Form Submission ---
-    // Function to handle form submission
-    function handleFormSubmission(formElement, submitBtnElement, messageElement, sourceInputElement) {
-        formElement.addEventListener("submit", function (e) {
-            e.preventDefault(); // Prevent the default form submission
+  function normalizePhoneJS(phone) {
+    if (!phone) return "";
+    return String(phone)
+      .replace(/\s+|-|\(|\)/g, "") // Remove spaces, hyphens, and parentheses
+      .replace(/^\+?964/, "") // Remove leading +964 or 964
+      .replace(/^0/, ""); // Remove leading 0
+  } // --- 2. Form Submission ---
 
-            // *** IMPORTANT: Paste your Google Apps Script URL here ***
-            const scriptURL = "PASTE_YOUR_DEPLOYED_WEB_APP_URL_HERE";
+  function handleFormSubmission(
+    formElement,
+    submitBtnElement,
+    messageElement,
+    sourceInputElement
+  ) {
+    formElement.addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent the default form submission // --- NEW: Validation Check ---
 
-            // Show loading state
-            submitBtnElement.disabled = true;
-            submitBtnElement.textContent = "جاري الإرسال...";
-            messageElement.textContent = "";
+      const phoneInput = formElement.querySelector('input[name="PhoneNumber"]');
+      const normalizedPhone = normalizePhoneJS(phoneInput.value);
+      const iraqPhoneRegex = /^7[345789]\d{8}$/; // 10 digits, starts with 7[3,4,5,7,8,9]
 
-            // Set lead source if available
-            if (sourceInputElement) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const leadSource = urlParams.get("source") || "organic"; // Default to "organic"
-                sourceInputElement.value = leadSource;
-            }
+      if (!iraqPhoneRegex.test(normalizedPhone)) {
+        messageElement.textContent =
+          "الرجاء إدخال رقم هاتف عراقي صالح (مثل 07701234567)";
+        messageElement.style.color = "red";
+        phoneInput.focus(); // Put the cursor back in the phone field
+        return; // Stop the submission
+      } // --- End Validation Check ---
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbz9sbxFw7jdhWQReBZyRv7QnHRmc4cSmUBbLhBzqICJaktAFLH1l85MPXbEvhAjaB6_fg/exec";
 
-            const formData = new FormData(formElement);
+      submitBtnElement.disabled = true;
+      submitBtnElement.textContent = "جاري الإرسال...";
+      messageElement.textContent = "";
 
-            fetch(scriptURL, { method: "POST", body: formData })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.result === "success") {
-                        // Success!
-                        messageElement.textContent = "تم استلام طلبك بنجاح! سيتم التواصل معك قريبا.";
-                        messageElement.style.color = "lightgreen";
-                        formElement.reset(); // Clear the form
-                    } else {
-                        // Error from our script
-                       throw new Error(data.message || "An unknown error occurred.");
-                    }
-                })
-                .catch(error => {
-                    // Network error or script error
-                    console.error("Error!", error.message);
-                    messageElement.textContent = "حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.";
-                    messageElement.style.color = "red";
-                })
-                .finally(() => {
-                    // Re-enable the button
-                    submitBtnElement.disabled = false;
-                    submitBtnElement.textContent = "اطلب الان";
-                });
-        });
-    }
+      if (sourceInputElement) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const leadSource = urlParams.get("source") || "organic";
+        sourceInputElement.value = leadSource;
+      }
 
-    // Initialize first form
-    const form1 = document.getElementById("leadForm");
-    const submitButton1 = document.getElementById("submitButton");
-    const formMessage1 = document.getElementById("formMessage");
-    const sourceInput1 = document.getElementById("sourceField");
-    if (form1) { // Check if form exists
-        handleFormSubmission(form1, submitButton1, formMessage1, sourceInput1);
-   }
+      const formData = new FormData(formElement);
 
-    // Initialize new form
-    const form2 = document.getElementById("leadFormNew");
-    const submitButton2 = document.getElementById("submitButtonNew");
-    const formMessage2 = document.getElementById("formMessageNew");
-    const sourceInput2 = document.getElementById("sourceFieldNew");
-    if (form2) { // Check if form exists
-         handleFormSubmission(form2, submitButton2, formMessage2, sourceInput2);
-}
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result === "success") {
+            messageElement.textContent =
+              "تم استلام طلبك بنجاح! سيتم التواصل معك قريبا.";
+            messageElement.style.color = "lightgreen";
+            formElement.reset();
+          } else {
+            throw new Error(data.message || "An unknown error occurred.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error!", error.message);
+          messageElement.textContent =
+            "حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.";
+          messageElement.style.color = "red";
+        })
+        .finally(() => {
+          submitBtnElement.disabled = false;
+          submitBtnElement.textContent = "اطلب الان";
+        });
+    });
+  } // Initialize form (Your old script only had form2, I'm keeping that logic)
 
-    // --- 3. Automatic Testimonial Slideshow ---
-    const testimonialElement = document.getElementById('testimonialImage');
-    
-    if (testimonialElement) {
-        const testimonialImages = [
-            'Images/Review-001.png',
-            'Images/Review-002.png',
-            'Images/Review-003.png'
-        ];
-        let currentTestimonialIndex = 0;
+  const form2 = document.getElementById("leadFormNew");
+  const submitButton2 = document.getElementById("submitButtonNew");
+  const formMessage2 = document.getElementById("formMessageNew");
+  const sourceInput2 = document.getElementById("sourceFieldNew");
+  if (form2) {
+    handleFormSubmission(form2, submitButton2, formMessage2, sourceInput2);
+  } // --- 3. Automatic Testimonial Slideshow ---
 
-        // Set an interval to change the image
-        setInterval(() => {
-            // 1. Fade out the current image
-             testimonialElement.style.opacity = 0;
+  const testimonialElement = document.getElementById("testimonialImage");
+  if (testimonialElement) {
+    const testimonialImages = [
+      "Images/Review-001.png",
+      "Images/Review-002.png",
+      "Images/Review-003.png",
+    ];
+    let currentTestimonialIndex = 0;
 
-            // 2. Wait for the fade-out (0.5s) to finish
-            setTimeout(() => {
-                // 3. Move to the next image in the list
-                currentTestimonialIndex++;
-                if (currentTestimonialIndex >= testimonialImages.length) {
-                    currentTestimonialIndex = 0; // Loop back to the start
-                }
-                
-                // 4. Update the image source
-                testimonialElement.src = testimonialImages[currentTestimonialIndex];
-                
-                // 5. Fade the new image back in
-               testimonialElement.style.opacity = 1;
-                
-            }, 500); // This time (500ms) MUST match your CSS transition time (0.5s)
-
-        }, 3000); // Change image every 4 seconds (4000ms)
-    }
-
+    setInterval(() => {
+      testimonialElement.style.opacity = 0;
+      setTimeout(() => {
+        currentTestimonialIndex++;
+        if (currentTestimonialIndex >= testimonialImages.length) {
+          currentTestimonialIndex = 0;
+        }
+        testimonialElement.src = testimonialImages[currentTestimonialIndex];
+        testimonialElement.style.opacity = 1;
+      }, 500);
+    }, 3000);
+  }
 });
